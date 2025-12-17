@@ -22,7 +22,8 @@ variable "region" {
 
 variable "vpc_id" {
   type        = string
-  description = "vpc id"
+  description = "vpc id; required if alb_arn set"
+  default     = null
 }
 
 # ALB
