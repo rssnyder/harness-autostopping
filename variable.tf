@@ -36,14 +36,14 @@ variable "alb_arn" {
 # Listener
 variable "listener_arn" {
   type        = string
-  description = "listener arn; required if alb_arn set"
+  description = "listener arn; required if alb_arn set, unless using ecs"
   default     = null
 }
 
 # TG
 variable "tg_arn" {
   type        = string
-  description = "target group arn; required if alb_arn set"
+  description = "target group arn; required if alb_arn set, unless using ecs"
   default     = null
 }
 
@@ -85,3 +85,16 @@ variable "ec2_id" {
   default     = null
 }
 
+# ECS
+
+variable "ecs_service_name" {
+  type        = string
+  description = "ecs service name"
+  default     = null
+}
+
+variable "ecs_cluster_name" {
+  type        = string
+  description = "ecs cluster name; required if ecs_service_name set"
+  default     = null
+}

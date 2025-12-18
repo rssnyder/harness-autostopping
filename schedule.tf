@@ -2,7 +2,8 @@ locals {
   rules = compact(
     concat(
       harness_autostopping_rule_scale_group.this[*].id,
-      harness_autostopping_rule_vm.this[*].id
+      harness_autostopping_rule_vm.this[*].id,
+      harness_autostopping_rule_ecs.this[*].id
     )
   )
 }
