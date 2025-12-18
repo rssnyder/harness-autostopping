@@ -20,13 +20,13 @@ variable "region" {
   description = "cloud region"
 }
 
+# ALB
 variable "vpc_id" {
   type        = string
   description = "vpc id; required if alb_arn set"
   default     = null
 }
 
-# ALB
 variable "alb_arn" {
   type        = string
   description = "id of the alb to import to harness; set to enable alb autostopping"
@@ -45,12 +45,6 @@ variable "tg_arn" {
   type        = string
   description = "target group arn; required if alb_arn set"
   default     = null
-}
-
-# ASG
-variable "asg_name" {
-  type        = string
-  description = "asg id"
 }
 
 # Schedule
@@ -75,3 +69,19 @@ variable "schedule_time_zone" {
   description = "Timezone for uptime schedule"
   default     = "America/Chicago"
 }
+
+# ASG
+variable "asg_name" {
+  type        = string
+  description = "asg id"
+  default     = null
+}
+
+# EC2
+
+variable "ec2_id" {
+  type        = string
+  description = "ec2 id"
+  default     = null
+}
+
