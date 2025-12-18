@@ -48,26 +48,19 @@ variable "tg_arn" {
 }
 
 # Schedule
-variable "schedule_name" {
-  type        = string
-  description = "Name for the schedule"
-  default     = "this"
-}
-
 variable "autostopping_schedules" {
   type = list(object({
-    days       = list(string)
-    start_time = string
-    end_time   = string
+    name      = string
+    type      = string
+    time_zone = string
+    spec = object({
+      days       = list(string)
+      start_time = string
+      end_time   = string
+    })
   }))
   default     = null
   description = "Optional list of schedule repeat windows. If null, no Harness autostopping schedule will be created."
-}
-
-variable "schedule_time_zone" {
-  type        = string
-  description = "Timezone for uptime schedule"
-  default     = "America/Chicago"
 }
 
 # ASG

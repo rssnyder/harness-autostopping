@@ -1,27 +1,25 @@
 locals {
-  rules = compact(
+  rule = compact(
     concat(
       harness_autostopping_rule_scale_group.this[*].id,
       harness_autostopping_rule_vm.this[*].id,
       harness_autostopping_rule_ecs.this[*].id
     )
-  )
+  )[0]
 }
 
 resource "harness_autostopping_schedule" "this" {
-  count         = var.autostopping_schedules == null || length(var.autostopping_schedules) == 0 ? 0 : 1
-  name          = var.schedule_name
-  schedule_type = "uptime"
-  time_zone     = var.schedule_time_zone
+  for_each = var.autostopping_schedules == null ? {} : { for schedule in var.autostopping_schedules : schedule.name => schedule }
 
-  dynamic "repeats" {
-    for_each = var.autostopping_schedules == null ? [] : var.autostopping_schedules
-    content {
-      days       = repeats.value.days
-      start_time = repeats.value.start_time
-      end_time   = repeats.value.end_time
-    }
+  name          = each.value.name
+  schedule_type = each.value.type
+  time_zone     = each.value.time_zone
+
+  repeats {
+    days       = each.value.spec.days
+    start_time = each.value.spec.start_time
+    end_time   = each.value.spec.end_time
   }
 
-  rules = local.rules
+  rules = [local.rule]
 }
